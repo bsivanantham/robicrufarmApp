@@ -1,2 +1,0 @@
-# robicrufarmApp
-Android application
