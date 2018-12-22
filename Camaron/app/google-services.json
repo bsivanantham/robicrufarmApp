@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "784031720767",
+    "firebase_url": "https://camaron-92e00.firebaseio.com",
+    "project_id": "camaron-92e00",
+    "storage_bucket": "camaron-92e00.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784031720767:android:6c0d394b95aacfc2",
+        "android_client_info": {
+          "package_name": "com.robicrufarm.camaron"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784031720767-v1bc894vgbhqd1j17f8el8m79d9rcjf7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.robicrufarm.camaron",
+            "certificate_hash": "5f336ebff57decd85fce60b460641d67d33b150e"
+          }
+        },
+        {
+          "client_id": "784031720767-a3mnrmd4264a6h37q3o8v34jvmkvfs31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsc1d-DjveIDbCyYdHxRvEa4JwyPtzIko"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784031720767-a3mnrmd4264a6h37q3o8v34jvmkvfs31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
