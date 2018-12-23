@@ -2,16 +2,13 @@ package com.robicrufarm.camaron.Login;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ResourceCursorAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -31,7 +28,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.robicrufarm.camaron.MainActivity;
 import com.robicrufarm.camaron.R;
 import com.robicrufarm.camaron.RobicRufarm;
-import com.robicrufarm.camaron.SplashScreen;
+
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 
 public class RegisterActivity extends RobicRufarm implements GoogleApiClient.OnConnectionFailedListener {
@@ -62,8 +61,6 @@ public class RegisterActivity extends RobicRufarm implements GoogleApiClient.OnC
         registerButton = findViewById(R.id.Register);
         signInButton = findViewById(R.id.sign_in_button);
         newPassButton = findViewById(R.id.yeniSifreButton);
-
-
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -180,109 +177,5 @@ public class RegisterActivity extends RobicRufarm implements GoogleApiClient.OnC
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
-/*
-    private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
-
-        // Reset errors.
-        loginEmail.setError(null);
-        loginPassword.setError(null);
-
-        // Store values at the time of the login attempt.
-        String email = loginEmail.getText().toString();
-        String password = loginPassword.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !this.isPasswordValid(password)) {
-            loginPassword.setError(getString(R.string.error_invalid_password));
-            focusView = loginPassword;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            loginEmail.setError(getString(R.string.error_field_required));
-            focusView = loginEmail;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            loginEmail.setError(getString(R.string.error_invalid_email));
-            focusView = loginEmail;
-            cancel = true;
-        }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            Intent intent = new Intent(this, MainActivity.class);
-            //showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
-            startActivity(intent);
-        }
-    }
-*/
-
-/*
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-
-            if (success) {
-                finish();
-            } else {
-                loginPassword.setError(getString(R.string.error_incorrect_password));
-                loginPassword.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-        }
-    }
-*/
 
 }

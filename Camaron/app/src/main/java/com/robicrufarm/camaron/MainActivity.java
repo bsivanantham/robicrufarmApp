@@ -1,5 +1,7 @@
 package com.robicrufarm.camaron;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -7,9 +9,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends RobicRufarm {
 
     private TextView mTextMessage;
+    private FirebaseAuth firebaseAuth;
+    GoogleApiClient mGoogleApiClient;
+    private GoogleSignInClient mGoogleSignInClient;
+
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -55,12 +71,38 @@ public class MainActivity extends RobicRufarm {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        int id1 = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
+        if (id1 == R.id.signout) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                // Name, email address, and profile photo Url
+                String name = user.getDisplayName();
+                String email = user.getEmail();
+                Uri photoUrl = user.getPhotoUrl();
+
+                // Check if user's email is verified
+                boolean emailVerified = user.isEmailVerified();
+
+                String uid = user.getUid();
+
+                FirebaseAuth.getInstance().signOut();
+
+                mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                startActivity(new Intent(getApplicationContext(), SplashScreen.class));
+                            }
+                        });
+            }
+            startActivity(new Intent(getApplicationContext(), SplashScreen.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 }

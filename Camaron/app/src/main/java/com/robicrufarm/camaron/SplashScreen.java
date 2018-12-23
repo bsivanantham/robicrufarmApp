@@ -20,7 +20,7 @@ public class SplashScreen extends Activity {
 
         setContentView(R.layout.splash);
 
-        /*this.handler = new Handler();
+        this.handler = new Handler();
         this.handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -29,6 +29,5 @@ public class SplashScreen extends Activity {
                 finish();
             }
         }, 10);
-*/
     }
 }
