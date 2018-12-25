@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class MainActivity extends RobicRufarm {
 
     private TextView mTextMessage;

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,14 +22,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.robicrufarm.camaron.MainActivity;
 import com.robicrufarm.camaron.R;
 import com.robicrufarm.camaron.RobicRufarm;
-
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 
 public class RegisterActivity extends RobicRufarm implements GoogleApiClient.OnConnectionFailedListener {
@@ -39,13 +34,11 @@ public class RegisterActivity extends RobicRufarm implements GoogleApiClient.OnC
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    EditText loginEmail, loginPassword;
-    Button loginButton, registerButton, newPassButton;
+    EditText phonenumber;
+    Button loginButton, newPassButton;
     FirebaseAuth firebaseAuth;
     GoogleApiClient mGoogleApiClient;
-    private SignInButton signInButton;
-    //private UserLoginTask mAuthTask = null;
-    private String emailText, passwordText;
+    private SignInButton googleSignInButton;
     private String TAG = "RegisterActivity";
 
     @Override
@@ -53,14 +46,10 @@ public class RegisterActivity extends RobicRufarm implements GoogleApiClient.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        final Context context = getApplicationContext();
-
-        loginEmail = findViewById(R.id.girisEmail);
-        loginPassword = findViewById(R.id.girisParola);
         loginButton = findViewById(R.id.girisButton);
-        registerButton = findViewById(R.id.Register);
-        signInButton = findViewById(R.id.sign_in_button);
+        googleSignInButton = findViewById(R.id.sign_in_button);
         newPassButton = findViewById(R.id.yeniSifreButton);
+        phonenumber = findViewById(R.id.editText);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -74,7 +63,7 @@ public class RegisterActivity extends RobicRufarm implements GoogleApiClient.OnC
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();
@@ -85,7 +74,7 @@ public class RegisterActivity extends RobicRufarm implements GoogleApiClient.OnC
             @Override
             public void onClick(View v) {
                 //attemptLogin();
-                emailText = loginEmail.getText().toString();
+/*                emailText = loginEmail.getText().toString();
                 passwordText = loginPassword.getText().toString();
 
                 firebaseAuth.signInWithEmailAndPassword(emailText, passwordText)
@@ -110,14 +99,14 @@ public class RegisterActivity extends RobicRufarm implements GoogleApiClient.OnC
                                 }
 
                             }
-                        });
+                        });*/
             }
         });
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
+ /*        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emailText = loginEmail.getText().toString();
+               emailText = loginEmail.getText().toString();
                 passwordText = loginPassword.getText().toString();
 
                 firebaseAuth.createUserWithEmailAndPassword(emailText, passwordText)
@@ -133,7 +122,7 @@ public class RegisterActivity extends RobicRufarm implements GoogleApiClient.OnC
                             }
                         });
             }
-        });
+        });*/
 
         if (firebaseAuth.getCurrentUser() != null) {
             //startActivity(new Intent(getApplicationContext(), RegisterActivity.class));

@@ -1,18 +1,24 @@
 package com.robicrufarm.camaron;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
 
+import com.robicrufarm.camaron.Login.PhoneAuthActivity;
 import com.robicrufarm.camaron.Login.RegisterActivity;
 
 /**
  * Created by Balavivek on 21-June-2018.
  */
 
-public class SplashScreen extends Activity {
-    Handler handler;
+public class SplashScreen extends RobicRufarm {
+    //Handler handler;
+    Button signInButton, registerButton ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,14 +26,22 @@ public class SplashScreen extends Activity {
 
         setContentView(R.layout.splash);
 
-        this.handler = new Handler();
-        this.handler.postDelayed(new Runnable() {
+        registerButton = findViewById(R.id.Register);
+        signInButton = findViewById(R.id.girisButton);
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                Intent intent = new Intent(SplashScreen.this, RegisterActivity.class);
-                startActivity(intent);
-                finish();
+            public void onClick(View view) {
+
             }
-        }, 1000);
+        });
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(PhoneAuthActivity.class, getApplicationContext());
+            }
+        });
+
     }
 }
