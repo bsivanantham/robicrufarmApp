@@ -9,15 +9,55 @@
     tools:openDrawer="start"
     tools:context=".MainActivity">
 
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <TextView
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="368dp"
         android:text="@string/title_home"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/weather"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:background="@mipmap/weather"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Ariana , Tunisia"
+            android:textSize="30sp" />
+        <!--display the temperature-->
+        <TextView
+            android:id="@+id/temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="10 °C"
+            android:textSize="90sp" />
+        <!--display the weather description-->
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Clouds"
+            android:textSize="40sp" />
+
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
