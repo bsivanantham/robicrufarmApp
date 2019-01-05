@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MainActivity extends RobicRufarm {
@@ -29,6 +36,12 @@ public class MainActivity extends RobicRufarm {
     GoogleApiClient mGoogleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
     private LinearLayout weather;
+    private ConstraintLayout dashboard;
+    private DatabaseReference mFirebaseDatabase;
+    private DatabaseReference battery_value;
+    private DatabaseReference chatting;
+    private DatabaseReference playing;
+    private FirebaseDatabase mFirebaseInstance;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -38,16 +51,19 @@ public class MainActivity extends RobicRufarm {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     weather.setVisibility(View.VISIBLE);
+                    dashboard.setVisibility(View.INVISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
                     weather.setVisibility(View.INVISIBLE);
+                    dashboard.setVisibility(View.VISIBLE);
 /*                    fragment = new ProfileFragment();
                     loadFragment(fragment);*/
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_notifications);
                     weather.setVisibility(View.INVISIBLE);
+                    dashboard.setVisibility(View.INVISIBLE);
                     return true;
             }
             return false;
@@ -68,7 +84,12 @@ public class MainActivity extends RobicRufarm {
         setContentView(R.layout.activity_main);
 
         mTextMessage = findViewById(R.id.message);
+        dashboard = findViewById(R.id.constraintLayout);
         weather = findViewById(R.id.weather);
+
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+
+
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
