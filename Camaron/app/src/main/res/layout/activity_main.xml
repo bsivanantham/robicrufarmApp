@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Ariana , Tunisia"
+            android:text="India"
             android:textSize="30sp" />
         <!--display the temperature-->
         <TextView
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="10 °C"
+            android:text="30 °C"
             android:textSize="90sp" />
         <!--display the weather description-->
         <TextView
