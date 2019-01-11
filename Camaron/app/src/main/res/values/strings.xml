@@ -24,7 +24,7 @@
     </string>
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_maps">Map</string>
-    <string name="signout">Sign Our</string>
+    <string name="signout">Sign Out</string>
     <string name="appbar_scrolling_view_behavior">appbar_scrolling_view_behavior</string>
 
     <string name="label_google_sign_in">Firebase + Google Sign In</string>

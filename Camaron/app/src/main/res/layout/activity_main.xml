@@ -22,8 +22,9 @@
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="66dp"
         android:text="@string/title_home"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintStart_toStartOf="@+id/frame_container"
         app:layout_constraintTop_toBottomOf="@+id/weather" />
@@ -80,29 +81,41 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.github.lzyzsd.circleprogress.ArcProgress
-            android:id="@+id/arc_progress1"
-            android:layout_width="0dp"
+            android:id="@+id/phArcValue"
+            android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginStart="58dp"
-            android:layout_marginEnd="22dp"
-            android:layout_marginBottom="112dp"
-            app:arc_bottom_text="Hello"
+            android:layout_marginTop="19dp"
+            android:layout_marginBottom="32dp"
+            app:arc_bottom_text="PH Value"
             app:arc_progress="40"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/arc_progress2"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/doArcValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.github.lzyzsd.circleprogress.ArcProgress
-            android:id="@+id/arc_progress2"
-            android:layout_width="0dp"
+            android:id="@+id/doArcValue"
+            android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginEnd="64dp"
-            android:layout_marginBottom="7dp"
-            app:arc_bottom_text="World"
-            app:arc_progress="70"
-            app:layout_constraintBottom_toBottomOf="@+id/arc_progress1"
+            android:layout_marginBottom="26dp"
+            app:arc_bottom_text="DO Value"
+            app:arc_progress="40"
+            app:layout_constraintBottom_toTopOf="@+id/tempArcValue"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/arc_progress1" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phArcValue" />
+
+        <com.github.lzyzsd.circleprogress.ArcProgress
+            android:id="@+id/tempArcValue"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="74dp"
+            app:arc_bottom_text="Temperature Value"
+            app:arc_progress="70"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/doArcValue" />
 
     </android.support.constraint.ConstraintLayout>
 

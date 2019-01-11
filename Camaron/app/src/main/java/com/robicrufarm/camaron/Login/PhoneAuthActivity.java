@@ -12,9 +12,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -74,6 +76,7 @@ public class PhoneAuthActivity extends RobicRufarm implements View.OnClickListen
     private static final int RC_SIGN_IN = 9001;
 
     private CallbackManager mCallbackManager;
+    private AccessTokenTracker accessTokenTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +125,7 @@ public class PhoneAuthActivity extends RobicRufarm implements View.OnClickListen
                 updateUI(STATE_VERIFY_SUCCESS, credential);
                 // [END_EXCLUDE]
                 signInWithPhoneAuthCredential(credential);
+                startActivity(MainActivity.class,getApplicationContext());
             }
 
             @Override
@@ -169,6 +173,7 @@ public class PhoneAuthActivity extends RobicRufarm implements View.OnClickListen
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
                 handleFacebookAccessToken(loginResult.getAccessToken());
+                startActivity(MainActivity.class,getApplicationContext());
             }
 
             @Override
@@ -214,6 +219,7 @@ public class PhoneAuthActivity extends RobicRufarm implements View.OnClickListen
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                assert account != null;
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately

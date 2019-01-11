@@ -6,42 +6,49 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.AccessTokenTracker;
+import com.facebook.login.LoginManager;
+import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
+import com.robicrufarm.camaron.Login.PhoneAuthActivity;
 
 public class MainActivity extends RobicRufarm {
 
+    private static final String TAG = "MainActivity";
     private TextView mTextMessage;
     private FirebaseAuth firebaseAuth;
     GoogleApiClient mGoogleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
+    private AccessTokenTracker accessTokenTracker;
     private LinearLayout weather;
     private ConstraintLayout dashboard;
     private DatabaseReference mFirebaseDatabase;
-    private DatabaseReference battery_value;
-    private DatabaseReference chatting;
-    private DatabaseReference playing;
     private FirebaseDatabase mFirebaseInstance;
+
+    private DatabaseReference phValue;
+    private DatabaseReference doValue;
+    private DatabaseReference tempValue;
+
+    private ArcProgress phMeter;
+    private ArcProgress tempMeter;
+    private ArcProgress doMeter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -70,14 +77,6 @@ public class MainActivity extends RobicRufarm {
         }
     };
 
-    private void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,12 +86,92 @@ public class MainActivity extends RobicRufarm {
         dashboard = findViewById(R.id.constraintLayout);
         weather = findViewById(R.id.weather);
 
-        mFirebaseInstance = FirebaseDatabase.getInstance();
+        this.phMeter = findViewById(R.id.phArcValue);
+        this.tempMeter = findViewById(R.id.tempArcValue);
+        this.doMeter = findViewById(R.id.doArcValue);
 
+        mFirebaseInstance = FirebaseDatabase.getInstance();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        this.phValue = mFirebaseInstance.getReference("ph");
+        this.tempValue = mFirebaseInstance.getReference("temp");
+        this.doValue = mFirebaseInstance.getReference("do");
+
+        setPhValueDB(0.00);
+        setTempValueDB(0.00);
+        setDoValueDB(0.00);
+
+        this.phValue.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                setPhValueDB(dataSnapshot.getValue(Double.class));
+
+                //energyMeter.setProgress(Integer.parseInt(dataSnapshot.getValue(String.class)));
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        phMeter.setProgress(getPhValueDB().intValue());
+                        tempMeter.setProgress(getTempValueDB().intValue());
+                        doMeter.setProgress(getDoValueDB().intValue());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+        this.tempValue.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //energyMeter.setProgress(Integer.parseInt(dataSnapshot.getValue(String.class)));
+                setTempValueDB(dataSnapshot.getValue(Double.class));
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        phMeter.setProgress(getPhValueDB().intValue());
+                        tempMeter.setProgress(getTempValueDB().intValue());
+                        doMeter.setProgress(getDoValueDB().intValue());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+        this.doValue.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //energyMeter.setProgress(Integer.parseInt(dataSnapshot.getValue(String.class)));
+                setDoValueDB(dataSnapshot.getValue(Double.class));
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        phMeter.setProgress(getPhValueDB().intValue());
+                        tempMeter.setProgress(getTempValueDB().intValue());
+                        doMeter.setProgress(getDoValueDB().intValue());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 
     @Override
@@ -134,11 +213,14 @@ public class MainActivity extends RobicRufarm {
                         new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                startActivity(new Intent(getApplicationContext(), SplashScreen.class));
+                                startActivity(new Intent(getApplicationContext(), PhoneAuthActivity.class));
                             }
                         });
+
+                LoginManager.getInstance().logOut();
+
             }
-            startActivity(new Intent(getApplicationContext(), SplashScreen.class));
+            startActivity(new Intent(getApplicationContext(), PhoneAuthActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

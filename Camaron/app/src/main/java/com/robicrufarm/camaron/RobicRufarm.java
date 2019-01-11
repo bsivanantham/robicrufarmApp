@@ -1,14 +1,11 @@
 package com.robicrufarm.camaron;
 
-import android.app.LoaderManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -16,6 +13,9 @@ public abstract class RobicRufarm extends AppCompatActivity {
     private String TAG = this.getClass().getName();
     @VisibleForTesting
     public ProgressDialog mProgressDialog;
+    public Double phValueDB;
+    public Double doValueDB;
+    public Double tempValueDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,30 @@ public abstract class RobicRufarm extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         hideProgressDialog();
+    }
+
+    public Double getPhValueDB() {
+        return phValueDB;
+    }
+
+    public void setPhValueDB(Double phValueDB) {
+        this.phValueDB = phValueDB;
+    }
+
+    public Double getDoValueDB() {
+        return doValueDB;
+    }
+
+    public void setDoValueDB(Double doValueDB) {
+        this.doValueDB = doValueDB;
+    }
+
+    public Double getTempValueDB() {
+        return tempValueDB;
+    }
+
+    public void setTempValueDB(Double tempValueDB) {
+        this.tempValueDB = tempValueDB;
     }
 
 }
