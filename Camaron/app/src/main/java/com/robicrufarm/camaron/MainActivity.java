@@ -78,7 +78,7 @@ public class MainActivity extends RobicRufarm {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -95,27 +95,25 @@ public class MainActivity extends RobicRufarm {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        this.phValue = mFirebaseInstance.getReference("ph");
+        this.phValue = mFirebaseInstance.getReference("pH");
         this.tempValue = mFirebaseInstance.getReference("temp");
         this.doValue = mFirebaseInstance.getReference("do");
 
-        setPhValueDB(0.00);
-        setTempValueDB(0.00);
-        setDoValueDB(0.00);
-
         this.phValue.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 setPhValueDB(dataSnapshot.getValue(Double.class));
-
                 //energyMeter.setProgress(Integer.parseInt(dataSnapshot.getValue(String.class)));
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        phMeter.setProgress(getPhValueDB().intValue());
-                        tempMeter.setProgress(getTempValueDB().intValue());
-                        doMeter.setProgress(getDoValueDB().intValue());
+                        setPhValueDB(dataSnapshot.getValue(Double.class));
+                        if(getPhValueDB() != null)
+                            phMeter.setProgress(getPhValueDB().intValue());
+                        if(getTempValueDB() != null)
+                            tempMeter.setProgress(getTempValueDB().intValue());
+                        if(getDoValueDB() != null)
+                            doMeter.setProgress(getDoValueDB().intValue());
                     }
                 });
             }
@@ -136,9 +134,12 @@ public class MainActivity extends RobicRufarm {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        phMeter.setProgress(getPhValueDB().intValue());
-                        tempMeter.setProgress(getTempValueDB().intValue());
-                        doMeter.setProgress(getDoValueDB().intValue());
+                        if(getPhValueDB() != null)
+                            phMeter.setProgress(getPhValueDB().intValue());
+                        if(getTempValueDB() != null)
+                            tempMeter.setProgress(getTempValueDB().intValue());
+                        if(getDoValueDB() != null)
+                            doMeter.setProgress(getDoValueDB().intValue());
                     }
                 });
             }
@@ -159,9 +160,12 @@ public class MainActivity extends RobicRufarm {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        phMeter.setProgress(getPhValueDB().intValue());
-                        tempMeter.setProgress(getTempValueDB().intValue());
-                        doMeter.setProgress(getDoValueDB().intValue());
+                        if(getPhValueDB() != null)
+                            phMeter.setProgress(getPhValueDB().intValue());
+                        if(getTempValueDB() != null)
+                            tempMeter.setProgress(getTempValueDB().intValue());
+                        if(getDoValueDB() != null)
+                            doMeter.setProgress(getDoValueDB().intValue());
                     }
                 });
             }

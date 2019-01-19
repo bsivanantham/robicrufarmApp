@@ -18,7 +18,7 @@ public abstract class RobicRufarm extends AppCompatActivity {
     public Double tempValueDB;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }

@@ -24,7 +24,7 @@ public class NewPassActivity extends AppCompatActivity {
     private String emailText ;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
         email = (EditText) findViewById(R.id.uyeEmail);
