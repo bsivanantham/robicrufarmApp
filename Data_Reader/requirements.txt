@@ -1,0 +1,6 @@
+firebase
+firebase_admin
+python-firebase
+gcloud
+sseclient
+python_jwt
